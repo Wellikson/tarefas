@@ -7,41 +7,37 @@ from uuid import uuid4
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY", "minha_chave_segura")
 
-# Configuração do Google Sheets
+# --- Configuração Google Sheets ---
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 creds = ServiceAccountCredentials.from_json_keyfile_name("credenciais.json", scope)
 client = gspread.authorize(creds)
 
 planilha_id = os.getenv("PLANILHA_ID")
-sheet = client.open_by_key(planilha_id).sheet1  # aba principal
+sheet = client.open_by_key(planilha_id).sheet1  # primeira aba
 
-# ---- Funções auxiliares ----
+# --- Funções auxiliares ---
 def get_tasks(usuario):
-    """Busca tarefas do usuário logado."""
     registros = sheet.get_all_records()
     return [t for t in registros if t["usuario"] == usuario]
 
 def save_task(usuario, atividade, status):
-    """Adiciona nova tarefa."""
     sheet.append_row([usuario, atividade, status, str(uuid4())])
 
 def update_task(task_id, status):
-    """Atualiza status da tarefa pelo ID."""
     registros = sheet.get_all_records()
-    for idx, row in enumerate(registros, start=2):  # pula cabeçalho
-        if row["id"] == task_id:
+    for idx, row in enumerate(registros, start=2):  # linha 2 em diante
+        if str(row["id"]) == str(task_id):
             sheet.update_cell(idx, 3, status)  # coluna 3 = status
             break
 
 def delete_task(task_id):
-    """Remove tarefa pelo ID."""
     registros = sheet.get_all_records()
     for idx, row in enumerate(registros, start=2):
-        if row["id"] == task_id:
+        if str(row["id"]) == str(task_id):
             sheet.delete_rows(idx)
             break
 
-# ---- Rotas ----
+# --- Rotas ---
 @app.route("/", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -100,6 +96,6 @@ def logout():
     session.clear()
     return redirect(url_for("login"))
 
-# ---- Rodar localmente ----
+# --- Rodar local ---
 if __name__ == "__main__":
     app.run(debug=True)
