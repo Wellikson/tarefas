@@ -1,15 +1,16 @@
 from flask import Flask, render_template, request, redirect, session
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
-
+import os
 app = Flask(__name__)
 app.secret_key = "chave_secreta"
 
-# Configuração do Google Sheets
+# ConfiguraÃ§Ã£o do Google Sheets
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 creds = ServiceAccountCredentials.from_json_keyfile_name("credenciais.json", scope)
 client = gspread.authorize(creds)
-sheet = client.open("Gerenciador de Tarefas").sheet1
+planilha_id = os.getenv("PLANILHA_ID")
+sheet = client.open_by_key(planilha_id).sheet1
 
 @app.route("/")
 def index():
@@ -64,3 +65,4 @@ def logout():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
