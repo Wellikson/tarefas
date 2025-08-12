@@ -1,57 +1,44 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8" />
     <title>Gerenciador de Tarefas</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <!-- CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <!-- Feather Icons -->
-    <script src="https://unpkg.com/feather-icons"></script>
 </head>
 <body>
-    <header>
-        <h1>Gerenciador de Tarefas - {{ usuario_nome }}</h1>
-        <a href="/logout" class="logout-btn"><i data-feather="log-out"></i> Sair</a>
-    </header>
+    <h1>Gerenciador de Tarefas - Usuário: {{ usuario_nome }}</h1>
+    <a href="/logout">Sair</a>
 
-    <form action="/add" method="POST" class="task-form">
+    <form action="/add" method="POST">
         <input type="text" name="atividade" placeholder="Digite a atividade" required />
-        <select name="status">
+        <select name="status" aria-label="Status da tarefa">
             <option value="Pendente">Pendente</option>
             <option value="Iniciado">Iniciado</option>
             <option value="Completo">Completo</option>
         </select>
-        <button type="submit"><i data-feather="plus-circle"></i> Adicionar</button>
+        <button type="submit">Adicionar</button>
     </form>
 
-    {% for categoria, lista in [('Pendentes', pendentes), ('Iniciadas', iniciadas), ('Completas', completas)] %}
-        <section>
-            <h2>{{ categoria }}</h2>
-            <ul>
-                {% for t in lista %}
-                <li>
-                    {{ t.atividade }}
-                    <form action="/update/{{ loop.index0 }}" method="POST" style="display:inline">
-                        <select name="status">
-                            <option value="Pendente" {% if t.status == "Pendente" %}selected{% endif %}>Pendente</option>
-                            <option value="Iniciado" {% if t.status == "Iniciado" %}selected{% endif %}>Iniciado</option>
-                            <option value="Completo" {% if t.status == "Completo" %}selected{% endif %}>Completo</option>
-                        </select>
-                        <button type="submit" title="Atualizar"><i data-feather="check-circle"></i></button>
-                    </form>
-                    <a href="/delete/{{ loop.index0 }}" title="Excluir"><i data-feather="trash-2"></i></a>
-                </li>
-                {% else %}
-                <li>Nenhuma tarefa nesta categoria.</li>
-                {% endfor %}
-            </ul>
-        </section>
+    {% for categoria, lista in {"Pendentes": pendentes, "Iniciadas": iniciadas, "Completas": completas}.items() %}
+    <h2>{{ categoria }}</h2>
+    <ul>
+        {% for t in lista %}
+        <li>
+            {{ t.atividade }}
+            <form action="/update/{{ t.id }}" method="POST" style="display:inline">
+                <select name="status">
+                    <option value="Pendente" {% if t.status == "Pendente" %}selected{% endif %}>Pendente</option>
+                    <option value="Iniciado" {% if t.status == "Iniciado" %}selected{% endif %}>Iniciado</option>
+                    <option value="Completo" {% if t.status == "Completo" %}selected{% endif %}>Completo</option>
+                </select>
+                <button type="submit">Ok</button>
+            </form>
+            <a href="/delete/{{ t.id }}">Excluir</a>
+        </li>
+        {% else %}
+        <li>Nenhuma tarefa {{ categoria.lower() }}.</li>
+        {% endfor %}
+    </ul>
     {% endfor %}
-
-    <script>
-        feather.replace();
-    </script>
 </body>
 </html>
