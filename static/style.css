@@ -1,90 +1,127 @@
+/* Fonte e fundo geral */
 body {
-    font-family: "Segoe UI", Tahoma, sans-serif;
-    background: #f0f2f5;
-    padding: 20px;
-    max-width: 900px;
-    margin: auto;
-}
-
-h1, h2 {
-    text-align: center;
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+    margin: 0;
+    padding: 0;
     color: #333;
 }
 
-a {
-    text-decoration: none;
-    color: #ff4d4d;
+/* Cabeçalho */
+h1 {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 28px;
     font-weight: bold;
 }
 
-form {
-    margin: 15px 0;
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    justify-content: center;
+/* Botão sair */
+a.logout {
+    color: #e74c3c;
+    font-weight: bold;
+    display: block;
+    margin: 10px auto;
+    text-align: center;
+    text-decoration: none;
+}
+a.logout:hover {
+    text-decoration: underline;
 }
 
-input, select, button {
-    padding: 10px;
+/* Formulário de adicionar tarefa */
+form {
+    text-align: center;
+    margin: 20px auto;
+}
+input[type="text"] {
+    padding: 8px;
+    width: 300px;
     border-radius: 6px;
     border: 1px solid #ccc;
-    font-size: 14px;
 }
-
+select {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
 button {
-    background: #4cafef;
-    color: white;
+    padding: 8px 14px;
+    border-radius: 6px;
     border: none;
     cursor: pointer;
+    color: white;
+    background-color: #3498db;
 }
-
 button:hover {
-    opacity: 0.9;
+    background-color: #2980b9;
 }
 
+/* Títulos de status */
+h2 {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 22px;
+}
+
+/* Lista de tarefas */
 ul {
     list-style: none;
     padding: 0;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
-.task-card {
-    background: white;
+/* Card da tarefa */
+li {
+    background-color: white;
+    margin: 10px auto;
     padding: 12px;
     border-radius: 8px;
-    margin-bottom: 8px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
-.task-info {
-    flex-grow: 1;
+/* Texto da tarefa */
+li span {
+    flex: 1;
+    margin-right: 10px;
 }
 
+/* Botões de status */
 .status-pendente {
-    border-left: 6px solid #ffc107;
+    background-color: #f39c12;
+    color: white;
 }
-
 .status-iniciado {
-    border-left: 6px solid #2196f3;
+    background-color: #2980b9;
+    color: white;
 }
-
 .status-completo {
-    border-left: 6px solid #4caf50;
+    background-color: #27ae60;
+    color: white;
 }
 
-.status-select {
-    padding: 5px;
-    border-radius: 4px;
-}
-
-.delete-link {
-    color: #ff4d4d;
+/* Botão excluir */
+a.delete {
+    color: #e74c3c;
     font-weight: bold;
     margin-left: 10px;
+    text-decoration: none;
+}
+a.delete:hover {
+    text-decoration: underline;
 }
 
-.delete-link:hover {
-    text-decoration: underline;
+/* Responsividade */
+@media (max-width: 600px) {
+    input[type="text"] {
+        width: 80%;
+        margin-bottom: 10px;
+    }
+    li {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 }
