@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Login</title>
+    <meta charset="UTF-8" />
+    <title>Login - Gerenciador de Tarefas</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Gerenciador de Tarefas</h1>
-    <form method="POST">
-        <input type="text" name="usuario" placeholder="Digite seu nome" required>
-        <button type="submit">Entrar</button>
-    </form>
+    <div class="login-box">
+        <h1>Login</h1>
+        {% if erro %}
+        <p class="erro">{{ erro }}</p>
+        {% endif %}
+        <form method="POST">
+            <input type="text" name="usuario" placeholder="Usuário" required>
+            <input type="password" name="senha" placeholder="Senha" required>
+            <button type="submit">Entrar</button>
+        </form>
+    </div>
 </body>
 </html>
-
-
-
-
