@@ -7,11 +7,12 @@
 </head>
 <body>
     <h1>Gerenciador de Tarefas - Usuário: {{ usuario_nome }}</h1>
-    <a href="/logout">Sair</a>
+    <a href="/logout" class="logout">Sair</a>
 
+    <!-- Formulário de adicionar -->
     <form action="/add" method="POST">
         <input type="text" name="atividade" placeholder="Digite a atividade" required />
-        <select name="status">
+        <select name="status" aria-label="Status da tarefa">
             <option value="Pendente">Pendente</option>
             <option value="Iniciado">Iniciado</option>
             <option value="Completo">Completo</option>
@@ -19,63 +20,66 @@
         <button type="submit">Adicionar</button>
     </form>
 
+    <!-- Pendentes -->
     <h2>Pendentes</h2>
     <ul>
         {% for t in pendentes %}
-        <li class="task-card status-pendente">
-            <div class="task-info">{{ t.atividade }}</div>
-            <form action="/update/{{ t.id }}" method="POST" style="display:inline">
-                <select name="status" class="status-select">
+        <li>
+            <span>{{ t.atividade }}</span>
+            <form action="/update/{{ t.id }}" method="POST" style="display:flex;align-items:center;">
+                <select name="status" class="status-{{ t.status|lower }}">
                     <option value="Pendente" {% if t.status == "Pendente" %}selected{% endif %}>Pendente</option>
                     <option value="Iniciado" {% if t.status == "Iniciado" %}selected{% endif %}>Iniciado</option>
                     <option value="Completo" {% if t.status == "Completo" %}selected{% endif %}>Completo</option>
                 </select>
                 <button type="submit">Ok</button>
             </form>
-            <a href="/delete/{{ t.id }}" class="delete-link">Excluir</a>
+            <a href="/delete/{{ t.id }}" class="delete">Excluir</a>
         </li>
         {% else %}
-        <li>Nenhuma tarefa pendente.</li>
+        <li><span>Nenhuma tarefa pendente.</span></li>
         {% endfor %}
     </ul>
 
+    <!-- Iniciadas -->
     <h2>Iniciadas</h2>
     <ul>
         {% for t in iniciadas %}
-        <li class="task-card status-iniciado">
-            <div class="task-info">{{ t.atividade }}</div>
-            <form action="/update/{{ t.id }}" method="POST" style="display:inline">
-                <select name="status" class="status-select">
+        <li>
+            <span>{{ t.atividade }}</span>
+            <form action="/update/{{ t.id }}" method="POST" style="display:flex;align-items:center;">
+                <select name="status" class="status-{{ t.status|lower }}">
                     <option value="Pendente" {% if t.status == "Pendente" %}selected{% endif %}>Pendente</option>
                     <option value="Iniciado" {% if t.status == "Iniciado" %}selected{% endif %}>Iniciado</option>
                     <option value="Completo" {% if t.status == "Completo" %}selected{% endif %}>Completo</option>
                 </select>
                 <button type="submit">Ok</button>
             </form>
-            <a href="/delete/{{ t.id }}" class="delete-link">Excluir</a>
+            <a href="/delete/{{ t.id }}" class="delete">Excluir</a>
         </li>
         {% else %}
-        <li>Nenhuma tarefa iniciada.</li>
+        <li><span>Nenhuma tarefa iniciada.</span></li>
         {% endfor %}
     </ul>
 
+    <!-- Completas -->
     <h2>Completas</h2>
     <ul>
         {% for t in completas %}
-        <li class="task-card status-completo">
-            <div class="task-info">{{ t.atividade }}</div>
-            <form action="/update/{{ t.id }}" method="POST" style="display:inline">
-                <select name="status" class="status-select">
+        <li>
+            <span>{{ t.atividade }}</span>
+            <form action="/update/{{ t.id }}" method="POST" style="display:flex;align-items:center;">
+                <select name="status" class="status-{{ t.status|lower }}">
                     <option value="Pendente" {% if t.status == "Pendente" %}selected{% endif %}>Pendente</option>
                     <option value="Iniciado" {% if t.status == "Iniciado" %}selected{% endif %}>Iniciado</option>
                     <option value="Completo" {% if t.status == "Completo" %}selected{% endif %}>Completo</option>
                 </select>
                 <button type="submit">Ok</button>
             </form>
-            <a href="/delete/{{ t.id }}" class="delete-link">Excluir</a>
+            <a href="/delete/{{ t.id }}" class="delete">Excluir</a>
         </li>
         {% else %}
-        <li>Nenhuma tarefa completa.</li>
+        <li><span>Nenhuma tarefa completa.</span></li>
         {% endfor %}
     </ul>
 </body>
