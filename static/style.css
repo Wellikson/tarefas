@@ -1,0 +1,14 @@
+﻿button i, a i {
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.logout-btn i {
+    margin-right: 5px;
+}
+
+button, a {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}

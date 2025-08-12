@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Gerenciador de Tarefas</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body class="login-page">
+    <div class="login-container">
+        <h1><i data-feather="log-in"></i> Entrar</h1>
+        <form method="POST">
+            <input type="text" name="usuario" placeholder="Seu nome" required>
+            <button type="submit"><i data-feather="arrow-right-circle"></i> Entrar</button>
+        </form>
+    </div>
+
+    <script>
+        feather.replace();
+    </script>
+</body>
+</html>
